@@ -37,12 +37,26 @@ export const FloatingNav = ({ navItems }: { navItems: any[] }) => {
         className={cn(
           "fixed z-[5000] transition-all duration-500 ease-in-out flex items-center justify-center",
           scrolled
-            ? "top-4 lg:top-6 inset-x-2 lg:inset-x-4 max-w-[95%] lg:max-w-5xl mx-auto rounded-2xl lg:rounded-full border border-black/5 dark:border-white/10 bg-white/85 dark:bg-black/85 backdrop-blur-xl shadow-xl py-2 px-4 lg:px-6" // Pill State - adjusted for mobile
-            : "top-0 inset-x-0 w-full border-b border-transparent bg-transparent py-4 px-6 lg:px-8" // Initial State
+            ? "top-4 lg:top-6 inset-x-2 lg:inset-x-4 max-w-[95%] lg:max-w-5xl mx-auto rounded-2xl lg:rounded-full py-2 px-4 lg:px-6" // REMOVED bg/blur/border from here
+            : "top-0 inset-x-0 w-full bg-transparent py-4 px-6 lg:px-8"
         )}
       >
+        {/* Independent Navbar Background Layer */}
+        <motion.div
+          className={cn(
+            "absolute inset-0 w-full h-full rounded-2xl lg:rounded-full pointer-events-none z-0",
+            scrolled
+              ? "bg-[rgba(255,255,255,0.4)] dark:bg-[rgba(0,3,25,0.4)] backdrop-blur-md shadow-xl border border-black/10 dark:border-white/[0.1]" // moved styles here
+              : "bg-transparent border-b border-transparent"
+          )}
+          style={{
+            backdropFilter: scrolled ? "blur(12px)" : "none", // Explicit inline blur
+            WebkitBackdropFilter: scrolled ? "blur(12px)" : "none"
+          }}
+        />
+
         <div className={cn(
-          "w-full flex items-center justify-between transition-all duration-300",
+          "relative z-10 w-full flex items-center justify-between transition-all duration-300",
           scrolled ? "max-w-full" : "max-w-7xl mx-auto"
         )}>
           {/* Brand */}
@@ -80,7 +94,7 @@ export const FloatingNav = ({ navItems }: { navItems: any[] }) => {
                   className={cn(
                     "flex items-center px-4 py-2 text-sm font-medium transition-all duration-200 relative rounded-full",
                     activeDropdown === idx
-                      ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-white/10"
+                      ? "text-blue-600 dark:text-blue-400 bg-blue-50/50 dark:bg-white/10"
                       : "text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100/50 dark:hover:bg-white/5"
                   )}
                 >
@@ -127,21 +141,22 @@ export const FloatingNav = ({ navItems }: { navItems: any[] }) => {
               exit={{ opacity: 0, y: 10, scale: 0.98 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
               className={cn(
-                "absolute left-0 right-0 mx-auto overflow-hidden shadow-2xl z-40 bg-white/95 dark:bg-black/95 backdrop-blur-2xl border border-gray-200 dark:border-white/10 hidden lg:block", // Hidden on mobile
+                "absolute mx-auto overflow-hidden shadow-2xl z-40 hidden lg:block",
+                // Removed bg and blur from here to separate layers
                 scrolled
-                  ? "top-[calc(100%+12px)] w-full rounded-2xl"
-                  : "top-full w-screen -left-[calc((100vw-100%)/2)] round-b-2xl border-t"
+                  ? "top-[calc(100%+12px)] left-0 right-0 w-full rounded-2xl"
+                  : "top-full left-0 w-full border-t rounded-b-2xl"
               )}
-              style={!scrolled ? {
-                width: "100vw",
-                left: "50%",
-                transform: "translateX(-50%)",
-                borderRadius: "0 0 16px 16px"
-              } : {}}
               onMouseEnter={() => setActiveDropdown(activeDropdown)}
               onMouseLeave={() => setActiveDropdown(null)}
             >
-              <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
+              {/* Isolated Glass Layer - Resolves blur issues with transforms */}
+              <div
+                className="absolute inset-0 z-0 bg-[rgba(255,255,255,0.6)] dark:bg-[rgba(0,3,25,0.65)] border border-gray-200 dark:border-white/10"
+                style={{ backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)" }}
+              />
+
+              <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-8">
                 <div className="grid grid-cols-12 gap-8">
                   {/* Left Side - Overview */}
                   <div className="col-span-3 border-r border-gray-200 dark:border-white/10 pr-8">
