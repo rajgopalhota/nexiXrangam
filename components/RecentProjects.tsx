@@ -12,14 +12,14 @@ const RecentProjects = () => {
         Our AI-Powered{" "}
         <span className="text-purple">Recruiting Solutions</span>
       </h1>
-      <div className="flex flex-wrap items-center justify-center p-4 gap-16 mt-10">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-24 gap-y-16 mt-10 w-full">
         {projects.map((item) => (
           <div
-            className="lg:min-h-[32.5rem] h-[25rem] flex items-center justify-center sm:w-96 w-[80vw]"
+            className="lg:min-h-[32.5rem] h-[32rem] flex items-center justify-center w-full"
             key={item.id}
           >
             <PinContainer title="Details" href={item.link}>
-              <div className="relative flex items-center justify-center sm:w-96 w-[80vw] overflow-hidden h-[20vh] lg:h-[30vh] mb-10">
+              <div className="relative flex items-center justify-center w-[80vw] md:w-[60vw] lg:w-[32vw] xl:w-[28vw] overflow-hidden h-[30vh] lg:h-[40vh] mb-10">
                 {/* Background */}
                 <div
                   className="relative w-full h-full overflow-hidden lg:rounded-3xl"
