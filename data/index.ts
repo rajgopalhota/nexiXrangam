@@ -6,42 +6,42 @@ export const navItems = [
     subItems: [
       { 
         name: "AI Sourcing", 
-        link: "#sourcing",
+        link: "/project/3",
         desc: "Quickly find top quality candidates",
         icon: "FaSearch",
         status: "online"
       },
       { 
         name: "Applicant Match", 
-        link: "#match",
+        link: "/project/2",
         desc: "Automated resume screening & ranking",
         icon: "FaUserCheck",
         status: "online"
       },
       { 
         name: "AI Scheduling", 
-        link: "#scheduling",
+        link: "/project/1",
         desc: "Automated coordination & booking",
         icon: "FaCalendarAlt",
         status: "offline"
       },
       { 
         name: "Campaigns & Nurturing", 
-        link: "#campaigns",
+        link: "/project/5",
         desc: "Personalized outreach sequences",
         icon: "FaBullhorn",
         status: "offline"
       },
       { 
         name: "Talent Insights", 
-        link: "#insights",
+        link: "/project/4",
         desc: "Real-time market intelligence",
         icon: "FaChartLine",
         status: "offline"
       },
       { 
         name: "Analytics", 
-        link: "#analytics",
+        link: "/project/4",
         desc: "Pipeline performance metrics",
         icon: "FaChartBar",
         status: "offline"
@@ -121,41 +121,81 @@ export const projects = [
     id: 1,
     title: "Interview Scheduling Agent",
     des: "AI-powered scheduling that coordinates interviews across time zones, syncs calendars, and eliminates back-and-forth emails.",
+    longDes: "Experience the future of coordination with our Interview Scheduling Agent. Built to handle complex calendar logic across global teams, it automatically negotiates times, handles reschedules, and sends reminders—so your recruiters never have to play calendar tetris again.",
     img: "/projects/p1.svg",
     iconLists: ["/tech-icons/next.svg", "/tech-icons/tail.svg", "/tech-icons/ts.svg", "/tech-icons/three.svg", "/tech-icons/gsap.svg"],
-    link: "#",
+    link: "/project/1",
+    features: [
+      { title: "Smart Conflict Resolution", desc: "Automatically finds gaps in busy executive calendars." },
+      { title: "Multi-Timezone Support", desc: "Seamlessly coordinates between NY, London, and Tokyo." },
+      { title: "Instant Rescheduling", desc: "candidates can reschedule via text without human intervention." }
+    ],
+    challenges: "Coordinating 5+ stakeholders with different working hours was causing a 4-day delay in time-to-hire.",
+    solution: "Implemented an autonomous agent that accesses calendar APIs directly to book slots instantly."
   },
   {
     id: 2,
     title: "Matching Agent",
     des: "Advanced AI algorithms that analyze skills, experience, and culture fit to match candidates with the perfect opportunities.",
+    longDes: "Stop keyword matching and start 'meaning' matching. Our Matching Agent understands the nuance of a candidate's career trajectory, mapping their soft skills and potential against your unique company DNA to predict long-term retention, not just interview pass rates.",
     img: "/projects/p2.png",
     iconLists: ["/tech-icons/next.svg", "/tech-icons/tail.svg", "/tech-icons/ts.svg", "/companies/stream.svg", "/tech-icons/c.svg"],
-    link: "#",
+    link: "/project/2",
+    features: [
+      { title: "Semantic Analysis", desc: "Understands 'Java' vs 'JavaScript' contextually." },
+      { title: "Cultural Fit Score", desc: "Quantifies alignment with your company values." },
+      { title: "Bias Elimination", desc: "Anonymized screening to ensure fair hiring practices." }
+    ],
+    challenges: "High turnover rates due to poor cultural fit despite technical alignment.",
+    solution: "Developed a dual-layer scoring system that weights cultural compatibility equal to technical prowess."
   },
   {
     id: 3,
     title: "Sourcing Agent",
     des: "Intelligent talent discovery that scours multiple platforms to find and qualify top candidates matching your criteria.",
+    longDes: "Your 24/7 headhunter. The Sourcing Agent doesn't just look at LinkedIn; it aggregates signals from GitHub, StackOverflow, and portfolio sites to build a holistic view of talent, reaching out with hyper-personalized messages that get replies.",
     img: "/projects/p3.png",
     iconLists: ["/tech-icons/re.svg", "/tech-icons/tail.svg", "/tech-icons/ts.svg", "/tech-icons/three.svg", "/tech-icons/c.svg"],
-    link: "#",
+    link: "/project/3",
+    features: [
+      { title: "Cross-Platform Scanning", desc: "Aggregates data from 15+ professional networks." },
+      { title: "Automated Outreach", desc: "Sends personalized sequences that feel human." },
+      { title: "Talent Pooling", desc: "Builds a pipeline of passive candidates for future needs." }
+    ],
+    challenges: "Recruiters spending 15 hours/week just searching for profiles.",
+    solution: "Automated the search phase, delivering a morning shortlist of 'ready-to-interview' candidates."
   },
   {
     id: 4,
     title: "Interview Agent",
     des: "AI-assisted interviewing that conducts preliminary screenings, assesses candidates, and provides detailed evaluation reports.",
+    longDes: "Conduct first-round screens at infinite scale. Our Interview Agent acts as a friendly, professional interviewer that asks adaptive technical and behavioral questions, recording responses and generating a comprehensive scorecard for your hiring managers.",
     img: "/projects/p4.png",
     iconLists: ["/tech-icons/next.svg", "/tech-icons/tail.svg", "/tech-icons/ts.svg", "/tech-icons/three.svg", "/tech-icons/gsap.svg"],
-    link: "#",
+    link: "/project/4",
+    features: [
+      { title: "Adaptive Questioning", desc: "Digs deeper based on candidate answers." },
+      { title: "Anti-Cheating", desc: "Detects AI usage or second-screen browsing." },
+      { title: "Instant Scorecards", desc: "Delivers a PDF report immediately after the call." }
+    ],
+    challenges: "Inconsistent screening quality across different recruiters.",
+    solution: "Standardized the first round with an AI agent that ensures every candidate gets the same fair chance."
   },
   {
     id: 5,
     title: "Outreach Agent",
     des: "Personalized candidate engagement with AI-crafted messages that resonate and convert passive candidates into active applicants.",
+    longDes: "Cut through the noise. The Outreach Agent analyzes a candidate's recent work, blog posts, and interests to craft a 'hand-written' email that speaks directly to their motivations, resulting in industry-leading response rates.",
     img: "/projects/p5.png",
     iconLists: ["/tech-icons/next.svg", "/tech-icons/tail.svg", "/tech-icons/ts.svg", "/companies/stream.svg", "/tech-icons/fm.svg"],
-    link: "#",
+    link: "/project/5",
+    features: [
+      { title: "Hyper-Personalization", desc: "References specific projects or posts from the candidate." },
+      { title: "Smart Follow-ups", desc: "Knows when to nudge and when to back off." },
+      { title: "A/B Testing", desc: "Automatically optimizes subject lines for open rates." }
+    ],
+    challenges: "Templates were getting <2% response rates from top-tier engineers.",
+    solution: "Switched to AI-generated personalized hooks, boosting response rates to ~18%."
   },
 ];
 

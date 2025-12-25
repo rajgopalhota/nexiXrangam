@@ -89,7 +89,7 @@ export const FloatingNav = ({ navItems }: { navItems: any[] }) => {
                 onMouseEnter={() => navItem.subItems && setActiveDropdown(idx)}
                 onMouseLeave={() => setActiveDropdown(null)}
               >
-                <a
+                <Link
                   href={navItem.link}
                   className={cn(
                     "flex items-center px-4 py-2 text-sm font-medium transition-all duration-200 relative rounded-full",
@@ -104,7 +104,7 @@ export const FloatingNav = ({ navItems }: { navItems: any[] }) => {
                       className={cn("ml-1 w-4 h-4 transition-transform duration-200", activeDropdown === idx ? "rotate-180" : "")}
                     />
                   )}
-                </a>
+                </Link>
               </div>
             ))}
           </div>
@@ -180,9 +180,10 @@ export const FloatingNav = ({ navItems }: { navItems: any[] }) => {
                       const Icon = iconMap[sub.icon] || FaSearch;
                       const isOnline = sub.status === "online";
                       return (
-                        <a
+                        <Link
                           key={sIdx}
                           href={sub.link}
+                          onClick={() => setActiveDropdown(null)}
                           className="group flex flex-col p-4 rounded-xl border border-transparent hover:bg-gray-100 dark:hover:bg-white/5 hover:border-gray-200 dark:hover:border-white/10 transition-all duration-200"
                         >
                           <div className="flex justify-between items-start mb-3">
@@ -219,7 +220,7 @@ export const FloatingNav = ({ navItems }: { navItems: any[] }) => {
                           <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed group-hover:text-gray-700 dark:group-hover:text-gray-300">
                             {sub.desc}
                           </p>
-                        </a>
+                        </Link>
                       );
                     })}
                   </div>
@@ -275,7 +276,7 @@ export const FloatingNav = ({ navItems }: { navItems: any[] }) => {
                 <div className="flex-1 px-4 py-6 space-y-2">
                   {navItems.map((navItem, idx) => (
                     <div key={idx} className="space-y-1">
-                      <a
+                      <Link
                         href={navItem.link}
                         onClick={() => !navItem.subItems && setMobileMenuOpen(false)}
                         className="flex items-center justify-between px-4 py-3 text-base font-semibold text-gray-800 dark:text-gray-100 bg-gray-50/50 dark:bg-white/5 rounded-xl active:scale-98 transition-all"
@@ -284,12 +285,12 @@ export const FloatingNav = ({ navItems }: { navItems: any[] }) => {
                         {navItem.subItems && (
                           <HiChevronDown className="w-5 h-5 text-gray-400" />
                         )}
-                      </a>
+                      </Link>
 
                       {navItem.subItems && (
                         <div className="pl-4 pr-2 space-y-1 mt-1">
                           {navItem.subItems.map((sub: any, sIdx: number) => (
-                            <a
+                            <Link
                               key={sIdx}
                               href={sub.link}
                               onClick={() => setMobileMenuOpen(false)}
@@ -302,7 +303,7 @@ export const FloatingNav = ({ navItems }: { navItems: any[] }) => {
                                   sub.status === "online" ? "bg-green-500" : "bg-gray-300 dark:bg-gray-600"
                                 )} />
                               )}
-                            </a>
+                            </Link>
                           ))}
                         </div>
                       )}
