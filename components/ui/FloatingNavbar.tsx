@@ -5,6 +5,7 @@ import { HiMenuAlt3, HiX, HiChevronDown } from "react-icons/hi";
 import { FaSearch, FaUserCheck, FaCalendarAlt, FaBullhorn, FaChartLine, FaChartBar, FaArrowRight } from "react-icons/fa";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 
 const iconMap: { [key: string]: React.ElementType } = {
   FaSearch,
@@ -13,20 +14,67 @@ const iconMap: { [key: string]: React.ElementType } = {
   FaBullhorn,
   FaChartLine,
   FaChartBar,
+  FaArrowRight
 };
 
 export const FloatingNav = ({ navItems }: { navItems: any[] }) => {
   const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
+
+  // Lock to prevent scroll listener from overriding state during nav click
+  const isNavigating = React.useRef(false);
 
   useEffect(() => {
     const handleScroll = () => {
+      // If we are programmatically scrolling, don't update state based on scroll position
+      // This prevents the navbar from flickering or interrupting the scroll
+      if (isNavigating.current) return;
+
       setScrolled(window.scrollY > 50);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, link: string) => {
+    // If it's a hash link and we are on the home page, handle scroll manually
+    if (link.startsWith("#")) {
+      e.preventDefault();
+      const targetId = link.substring(1);
+
+      if (pathname === "/") {
+        const element = document.getElementById(targetId);
+        if (element) {
+          // Lock scroll listener to prevent updates during auto-scroll
+          isNavigating.current = true;
+
+          // Perform scroll
+          element.scrollIntoView({ behavior: "smooth" });
+
+          setMobileMenuOpen(false);
+          setActiveDropdown(null);
+
+          // Release lock and sync state AFTER scroll completes
+          // We don't force setScrolled(true) immediately to avoid layout thrashing during scroll start
+          setTimeout(() => {
+            isNavigating.current = false;
+            // Manual sync after scroll is done
+            setScrolled(window.scrollY > 50);
+          }, 1000);
+        }
+      } else {
+        // If not on home page, navigate to home with hash
+        router.push("/" + link);
+      }
+    } else {
+      // Normal navigation
+      setMobileMenuOpen(false);
+      setActiveDropdown(null);
+    }
+  };
 
   return (
     <>
@@ -37,20 +85,19 @@ export const FloatingNav = ({ navItems }: { navItems: any[] }) => {
         className={cn(
           "fixed z-[5000] transition-all duration-500 ease-in-out flex items-center justify-center",
           scrolled
-            ? "top-4 lg:top-6 inset-x-2 lg:inset-x-4 max-w-[95%] lg:max-w-5xl mx-auto rounded-2xl lg:rounded-full py-2 px-4 lg:px-6" // REMOVED bg/blur/border from here
+            ? "top-4 lg:top-6 inset-x-2 lg:inset-x-4 max-w-[95%] lg:max-w-5xl mx-auto rounded-2xl lg:rounded-full py-2 px-4 lg:px-6"
             : "top-0 inset-x-0 w-full bg-transparent py-4 px-6 lg:px-8"
         )}
       >
-        {/* Independent Navbar Background Layer */}
         <motion.div
           className={cn(
             "absolute inset-0 w-full h-full rounded-2xl lg:rounded-full pointer-events-none z-0",
             scrolled
-              ? "bg-[rgba(255,255,255,0.4)] dark:bg-[rgba(0,3,25,0.4)] backdrop-blur-md shadow-xl border border-black/10 dark:border-white/[0.1]" // moved styles here
+              ? "bg-[rgba(255,255,255,0.4)] dark:bg-[rgba(0,3,25,0.4)] backdrop-blur-md shadow-xl border border-black/10 dark:border-white/[0.1]"
               : "bg-transparent border-b border-transparent"
           )}
           style={{
-            backdropFilter: scrolled ? "blur(12px)" : "none", // Explicit inline blur
+            backdropFilter: scrolled ? "blur(12px)" : "none",
             WebkitBackdropFilter: scrolled ? "blur(12px)" : "none"
           }}
         />
@@ -91,6 +138,7 @@ export const FloatingNav = ({ navItems }: { navItems: any[] }) => {
               >
                 <Link
                   href={navItem.link}
+                  onClick={(e) => handleNavClick(e, navItem.link)}
                   className={cn(
                     "flex items-center px-4 py-2 text-sm font-medium transition-all duration-200 relative rounded-full",
                     activeDropdown === idx
@@ -142,7 +190,6 @@ export const FloatingNav = ({ navItems }: { navItems: any[] }) => {
               transition={{ duration: 0.2, ease: "easeOut" }}
               className={cn(
                 "absolute mx-auto overflow-hidden shadow-2xl z-40 hidden lg:block",
-                // Removed bg and blur from here to separate layers
                 scrolled
                   ? "top-[calc(100%+12px)] left-0 right-0 w-full rounded-2xl"
                   : "top-full left-0 w-full border-t rounded-b-2xl"
@@ -150,7 +197,6 @@ export const FloatingNav = ({ navItems }: { navItems: any[] }) => {
               onMouseEnter={() => setActiveDropdown(activeDropdown)}
               onMouseLeave={() => setActiveDropdown(null)}
             >
-              {/* Isolated Glass Layer - Resolves blur issues with transforms */}
               <div
                 className="absolute inset-0 z-0 bg-[rgba(255,255,255,0.6)] dark:bg-[rgba(0,3,25,0.65)] border border-gray-200 dark:border-white/10"
                 style={{ backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)" }}
@@ -190,7 +236,6 @@ export const FloatingNav = ({ navItems }: { navItems: any[] }) => {
                             <div className="w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform duration-200">
                               <Icon className="w-5 h-5" />
                             </div>
-                            {/* Updated Status Badge - Dot Style */}
                             <div className={cn(
                               "flex items-center gap-1.5 pl-2 pr-2.5 py-1 rounded-full border text-[10px] font-semibold tracking-wide uppercase transition-colors",
                               isOnline
@@ -239,15 +284,13 @@ export const FloatingNav = ({ navItems }: { navItems: any[] }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[5001] lg:hidden" // z-index higher than navbar
+            className="fixed inset-0 z-[5001] lg:hidden"
           >
-            {/* Backdrop */}
             <div
               className="absolute inset-0 bg-black/40 backdrop-blur-sm"
               onClick={() => setMobileMenuOpen(false)}
             />
 
-            {/* Menu Content */}
             <motion.div
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
@@ -278,7 +321,7 @@ export const FloatingNav = ({ navItems }: { navItems: any[] }) => {
                     <div key={idx} className="space-y-1">
                       <Link
                         href={navItem.link}
-                        onClick={() => !navItem.subItems && setMobileMenuOpen(false)}
+                        onClick={(e) => handleNavClick(e, navItem.link)}
                         className="flex items-center justify-between px-4 py-3 text-base font-semibold text-gray-800 dark:text-gray-100 bg-gray-50/50 dark:bg-white/5 rounded-xl active:scale-98 transition-all"
                       >
                         {navItem.name}
