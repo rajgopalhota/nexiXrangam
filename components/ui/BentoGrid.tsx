@@ -14,7 +14,7 @@ import animationData from "@/data/confetti.json";
 import MagicButton from "../MagicButton";
 import dynamic from "next/dynamic";
 
-const Lottie = dynamic(() => import("react-lottie"), { ssr: false });
+import Lottie from "lottie-react";
 
 export const BentoGrid = ({
   className,
@@ -184,7 +184,7 @@ export const BentoGridItem = ({
                   }`}
               >
                 {/* <img src="/confetti.gif" alt="confetti" /> */}
-                <Lottie options={defaultOptions} height={200} width={400} />
+                <Lottie animationData={animationData} loop={copied} autoplay={copied} style={{ height: 200, width: 400 }} />
               </div>
 
               <MagicButton
