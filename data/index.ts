@@ -202,6 +202,23 @@ export const projects = [
     solution: "Switched to AI-generated personalized hooks, boosting response rates to ~18%.",
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?si=6m6yXG8jSw4w9WgX"
   },
+  {
+    id: 6,
+    title: "AI Calling Agent",
+    des: "Human-like AI calls to engage shortlisted candidates, capture genuine intent, and operate with compliance built into every call.",
+    longDes: "Our AI agents call shortlisted candidates on your behalf, ensuring timely, professional, and consistent engagement at scale. Candidates experience fluid, human-sounding calls that respectfully gather interest, availability, and feedback, while strictly adhering to consent and privacy regulations.",
+    img: "/projects/p6.png",
+    iconLists: ["/tech-icons/next.svg", "/tech-icons/tail.svg", "/tech-icons/ts.svg", "/companies/stream.svg", "/tech-icons/c.svg"],
+    link: "/project/6",
+    features: [
+      { title: "Natural Conversations", desc: "Reach candidates instantly using ultra-natural AI voices." },
+      { title: "Interest Confirmation", desc: "Identify who’s interested, available, or needs follow-up." },
+      { title: "Compliance-First", desc: "Every interaction is designed to follow consent and data-privacy regulations." }
+    ],
+    challenges: "High-volume hiring requires endless manual phone screens, often leading to recruiter burnout and slow response times.",
+    solution: "Deployed AI calling agents to proactively reach candidates, improving speed-to-lead and ensuring consistent, compliant communication.",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?si=6m6yXG8jSw4w9WgX"
+  },
 ];
 
 export const testimonials = [
